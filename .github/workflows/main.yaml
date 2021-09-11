@@ -3,7 +3,7 @@ on:
   push:
 jobs:
   format-code:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latestS
     steps:
       - name: Get code
         uses: actions/checkout@v2

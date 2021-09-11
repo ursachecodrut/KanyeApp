@@ -14,7 +14,31 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String? _quote;
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        textTheme: Theme.of(context).textTheme.apply(
+              bodyColor: Colors.white,
+            ),
+        primaryColor: const Color(0xffB5179E),
+        accentColor: const Color(0xff560BAD),
+      ),
+      home: const Home(),
+    );
+  }
+}
+
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  String? _quote = '';
   final String _apiUrl = 'http://api.kanye.rest/';
   final Client _client = Client();
 
@@ -34,20 +58,61 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    Future.wait(<Future<void>>[getKanyeQuote()]).then((_) => <void>{setState(() {})});
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: ElevatedButton(
-            onPressed: () {
-              getKanyeQuote();
-            },
-            child: const Text('print Kanye'),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('lma.exe'),
+        centerTitle: true,
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: <Color>[
+              Theme.of(context).primaryColor,
+              Theme.of(context).accentColor,
+            ],
           ),
         ),
+        child: Padding(
+          padding: const EdgeInsetsDirectional.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                _quote!,
+                style: const TextStyle(fontSize: 25.0, fontWeight: FontWeight.w500),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: const <Widget>[
+                  Text(
+                    '- Kanye West',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).primaryColor,
+        onPressed: () {
+          Future.wait(<Future<void>>[getKanyeQuote()]).then((_) => <void>{setState(() {})});
+        },
+        child: const Icon(Icons.refresh),
       ),
     );
   }
