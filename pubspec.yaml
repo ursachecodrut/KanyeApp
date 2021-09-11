@@ -13,6 +13,7 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.3
   http: ^0.13.3
+  flutter_launcher_icons: "^0.9.0"
 
 dev_dependencies:
   flutter_test:
@@ -20,3 +21,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+flutter_icons:
+  image_path: "icon/lolec.jpg"
+  android: true
+  ios: true
