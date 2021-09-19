@@ -12,7 +12,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  String? _quote = '';
+  String? _quote;
   final String _apiUrl = 'http://api.kanye.rest/';
   final Client _client = Client();
 
@@ -37,6 +37,39 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    if (_quote == null)
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('lma.exe'),
+          centerTitle: true,
+          actions: <Widget>[
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(builder: (BuildContext context) => const About()),
+                );
+              },
+              icon: const Icon(Icons.more_horiz),
+            ),
+          ],
+        ),
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: <Color>[
+                Theme.of(context).primaryColor,
+                Theme.of(context).accentColor,
+              ],
+            ),
+          ),
+          child: const Center(
+            child: CircularProgressIndicator(),
+          ),
+        ),
+      );
     return Scaffold(
       appBar: AppBar(
         title: const Text('lma.exe'),
